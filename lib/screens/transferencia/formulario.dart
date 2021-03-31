@@ -38,7 +38,7 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
                 label: _labelValor,
                 hint: _hintValor,
                 icon: Icons.monetization_on),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () => _criaTransferencia(context),
               child: Text(_textButtonConfirmar),
             ),
