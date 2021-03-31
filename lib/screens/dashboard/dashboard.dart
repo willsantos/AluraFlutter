@@ -10,17 +10,37 @@ class Dashboard extends StatelessWidget {
         title: Text(_titleAppBar),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset('images/bytebank_logo.png'),
-          Container(
-            color: Colors.green[700],
-            width: 120,
-            height: 100,
-            child: Column(
-              children: [
-                Icon(Icons.people),
-                Text('Contatos'),
-              ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset('images/bytebank_logo.png'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: EdgeInsets.all(8.0),
+              color: Theme.of(context).primaryColor,
+              width: 120,
+              height: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.people,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    'Contatos',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],
