@@ -1,9 +1,10 @@
 # bytebank
 
-A new Flutter project developed in Alura's classes:
+A new Flutter project developed in Alura's courses:
 
 - [X] [Fundamentos de Flutter](https://cursos.alura.com.br/course/flutter-fundamentos)
-- [ ] [Persistência com Flutter](https://cursos.alura.com.br/course/flutter-persistencia-interna)
+- [x] [Persistência com Flutter](https://cursos.alura.com.br/course/flutter-persistencia-interna)
+- [ ] [Flutter com web API](https://cursos.alura.com.br/course/flutter-web-api)
  
 
 
