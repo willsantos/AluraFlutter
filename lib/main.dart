@@ -1,8 +1,15 @@
+import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/screens/contacts/formulario.dart';
+import 'package:bytebank/screens/contacts/list.dart';
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:bytebank/screens/transferencia/lista.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(ByteBank());
+import 'models/contact.dart';
+
+void main() {
+  runApp(ByteBank());
+}
 
 class ByteBank extends StatelessWidget {
   @override
