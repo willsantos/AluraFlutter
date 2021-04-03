@@ -1,19 +1,19 @@
-import 'package:bytebank/models/transferencia.dart';
+import 'package:bytebank/models/transfers.dart';
 import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Transferencias';
 
-class ListaTransferencias extends StatefulWidget {
-  final List<Transferencia> _transferencias = [];
+class transferList extends StatefulWidget {
+  final List<transfer> _transfers = [];
 
   @override
   State<StatefulWidget> createState() {
-    return ListaTransferenciasState();
+    return transferListState();
   }
 }
 
-class ListaTransferenciasState extends State<ListaTransferencias> {
+class transferListState extends State<transferList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +21,10 @@ class ListaTransferenciasState extends State<ListaTransferencias> {
           title: Text(_titleAppBar),
         ),
         body: ListView.builder(
-          itemCount: widget._transferencias.length,
+          itemCount: widget._transfers.length,
           itemBuilder: (context, index) {
-            final transferencia = widget._transferencias[index];
-            return ItemTransferencia(transferencia);
+            final transfer = widget._transfers[index];
+            return TransferItem(transfer);
           },
         ),
         floatingActionButton: FloatingActionButton(
@@ -33,33 +33,33 @@ class ListaTransferenciasState extends State<ListaTransferencias> {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return FormularioTransferencia();
             })).then(
-              (transferenciaRecebida) => _atualiza(transferenciaRecebida),
+              (transferReceived) => _update(transferReceived),
             );
           },
         ));
   }
 
-  void _atualiza(Transferencia transferenciaRecebida) {
-    if (transferenciaRecebida != null) {
+  void _update(transfer transferReceived) {
+    if (transferReceived != null) {
       setState(() {
-        widget._transferencias.add(transferenciaRecebida);
+        widget._transfers.add(transferReceived);
       });
     }
   }
 }
 
-class ItemTransferencia extends StatelessWidget {
-  final Transferencia _transferencia;
+class TransferItem extends StatelessWidget {
+  final transfer _transfer;
 
-  ItemTransferencia(this._transferencia);
+  TransferItem(this._transfer);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         leading: Icon(Icons.monetization_on),
-        title: Text(_transferencia.valor.toString()),
-        subtitle: Text(_transferencia.numeroConta.toString()),
+        title: Text(_transfer.value.toString()),
+        subtitle: Text(_transfer.accountNumber.toString()),
       ),
     );
   }

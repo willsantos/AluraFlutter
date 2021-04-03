@@ -1,5 +1,5 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/models/transferencia.dart';
+import 'package:bytebank/models/transfers.dart';
 import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Criando Transferencia';
@@ -52,7 +52,7 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
     final int numeroConta = int.tryParse(_controllerNumeroConta.text);
     final double valor = double.tryParse(_controllerValor.text);
     if (numeroConta != null && valor != null) {
-      final transferenciaCriada = Transferencia(valor, numeroConta);
+      final transferenciaCriada = transfer(valor, numeroConta);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

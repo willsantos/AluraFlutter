@@ -1,5 +1,5 @@
 import 'package:bytebank/screens/contacts/list.dart';
-import 'package:bytebank/screens/transferencia/lista.dart';
+import 'package:bytebank/screens/transferencia/list_transfer.dart';
 import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Dashboard';
@@ -67,7 +67,7 @@ class Dashboard extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ListaTransferencias(),
+                          builder: (context) => transferList(),
                         ),
                       );
                     },
