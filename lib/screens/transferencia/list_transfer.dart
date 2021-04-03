@@ -1,5 +1,5 @@
 import 'package:bytebank/models/transfers.dart';
-import 'package:bytebank/screens/transferencia/formulario.dart';
+import 'package:bytebank/screens/transferencia/form_transfer.dart';
 import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Transferencias';
@@ -31,7 +31,7 @@ class transferListState extends State<transferList> {
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return FormularioTransferencia();
+              return TransferForm();
             })).then(
               (transferReceived) => _update(transferReceived),
             );

@@ -1,4 +1,4 @@
-import 'package:bytebank/screens/contacts/list.dart';
+import 'package:bytebank/screens/contacts/list_contacts.dart';
 import 'package:bytebank/screens/transferencia/list_transfer.dart';
 import 'package:flutter/material.dart';
 

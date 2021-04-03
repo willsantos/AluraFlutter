@@ -1,6 +1,6 @@
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
-import 'package:bytebank/screens/contacts/formulario.dart';
+import 'package:bytebank/screens/contacts/form_contact.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
