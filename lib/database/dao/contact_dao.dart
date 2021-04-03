@@ -2,6 +2,8 @@ import 'package:bytebank/models/contact.dart';
 import 'package:sqflite/sqflite.dart';
 import '../app_database.dart';
 
+//TODO Implementar CRUD, falta UPDATE e DELETE
+
 class ContactDao {
 
   static const String _tableName = 'contacts';
