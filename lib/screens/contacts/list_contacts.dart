@@ -10,7 +10,7 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final _titleAppbar = 'Contatos';
+  final _titleAppbar = 'Transfer';
   final ContactDao _dao = ContactDao();
 
   @override
