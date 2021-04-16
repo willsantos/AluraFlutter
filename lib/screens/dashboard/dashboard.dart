@@ -34,7 +34,6 @@ class Dashboard extends StatelessWidget {
                   Icons.description,
                   onClick: () => _showTransfersList(context),
                 ),
-
               ],
             ),
           ),
@@ -51,7 +50,7 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  void _showTransfersList(BuildContext context){
+  void _showTransfersList(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => TransactionsList(),
@@ -65,7 +64,12 @@ class _FeatureItem extends StatelessWidget {
   final IconData icon;
   final Function onClick;
 
-  _FeatureItem(this.name, this.icon, {@required this.onClick});
+  _FeatureItem(
+    this.name,
+    this.icon, {
+    @required this.onClick,
+  })  : assert(icon != null),
+        assert(onClick != null);
 
   @override
   Widget build(BuildContext context) {
