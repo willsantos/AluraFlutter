@@ -52,7 +52,7 @@ class TransferFormState extends State<TransferForm> {
     final int accountNumber = int.tryParse(_controllerAccountNumber.text);
     final double valor = double.tryParse(_controllerValue.text);
     if (accountNumber != null && valor != null) {
-      final transferCreated = transfer(valor, accountNumber);
+      final transferCreated = Transfer(valor, accountNumber);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

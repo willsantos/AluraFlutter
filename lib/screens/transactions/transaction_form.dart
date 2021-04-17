@@ -1,6 +1,6 @@
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
-import 'package:bytebank/services/api.dart';
+import 'package:bytebank/services/routes/transactions_routes.dart';
 import 'package:flutter/material.dart';
 
 class TransactionForm extends StatefulWidget {
@@ -14,6 +14,7 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
+  final TransactionRoutes _transactionRoute = TransactionRoutes();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     child: Text('Transfer'), onPressed: () {
                       final double value = double.tryParse(_valueController.text);
                       final transactionCreated = Transaction(value, widget.contact);
-                      save(transactionCreated).then((transaction){
+                      _transactionRoute.save(transactionCreated).then((transaction){
                         if(transaction != null){
                           Navigator.pop(context);
                         }

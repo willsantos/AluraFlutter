@@ -1,8 +1,8 @@
-class transfer {
+class Transfer {
   final double value;
   final int accountNumber;
 
-  transfer(
+  Transfer(
     this.value,
     this.accountNumber,
   );

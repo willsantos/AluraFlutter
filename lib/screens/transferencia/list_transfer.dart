@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 const _titleAppBar = 'Transferencias';
 
 class TransferList extends StatefulWidget {
-  final List<transfer> _transfers = [];
+  final List<Transfer> _transfers = [];
 
   @override
   State<StatefulWidget> createState() {
@@ -39,7 +39,7 @@ class TransferListState extends State<TransferList> {
         ));
   }
 
-  void _update(transfer transferReceived) {
+  void _update(Transfer transferReceived) {
     if (transferReceived != null) {
       setState(() {
         widget._transfers.add(transferReceived);
@@ -49,7 +49,7 @@ class TransferListState extends State<TransferList> {
 }
 
 class TransferItem extends StatelessWidget {
-  final transfer _transfer;
+  final Transfer _transfer;
 
   TransferItem(this._transfer);
 
