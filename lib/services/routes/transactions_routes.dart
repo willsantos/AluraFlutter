@@ -6,6 +6,7 @@ import '../api.dart';
 
 class TransactionRoutes {
   Future<List<Transaction>> findAll() async {
+
     final Response response = await client
         .get(Uri.https(baseUrl, 'transactions'))
         .timeout(Duration(seconds: 5));
