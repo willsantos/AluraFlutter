@@ -1,11 +1,13 @@
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:bytebank/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:sqflite/sqflite.dart';
+import 'models/transaction.dart';
+import 'models/contact.dart';
 
 void main() {
   runApp(ByteBank());
-  findAll();
+
 }
 
 class ByteBank extends StatelessWidget {
