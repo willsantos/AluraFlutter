@@ -27,6 +27,7 @@ dependencies:
   path:
   http:
   http_interceptor:
+  flutter_dotenv:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -51,6 +52,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/bytebank_logo.png
+    - .env
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
