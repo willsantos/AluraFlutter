@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 // import 'package:sqflite/sqflite.dart';
 
 Future main() async {
-  await DotEnv.load();
+  await DotEnv.load(fileName: '.env');
   runApp(ByteBank());
-
 }
 
 class ByteBank extends StatelessWidget {
