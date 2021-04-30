@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:bytebank/models/transaction.dart';
 import 'package:http/http.dart';
 
-
 import '../api.dart';
 
 class TransactionRoutes {
@@ -18,11 +17,14 @@ class TransactionRoutes {
         .toList();
   }
 
-  Future<Transaction> save(Transaction transaction) async {
+  Future<Transaction> save(Transaction transaction, String password) async {
     final String transactionJson = jsonEncode(transaction.toJson());
     final Response response = await client
         .post(Uri.https(baseUrl, 'transactions'),
-            headers: {'Content-type': 'application/json', 'password': '1000'},
+            headers: {
+              'Content-type': 'application/json',
+              'password': password,
+            },
             body: transactionJson)
         .timeout(Duration(seconds: 5));
 
