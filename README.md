@@ -4,7 +4,8 @@ A new Flutter project developed in Alura's courses:
 
 - [X] [Fundamentos de Flutter](https://cursos.alura.com.br/course/flutter-fundamentos)
 - [x] [Persistência com Flutter](https://cursos.alura.com.br/course/flutter-persistencia-interna)
-- [ ] [Flutter com web API](https://cursos.alura.com.br/course/flutter-web-api)
+- [x] [Flutter com web API](https://cursos.alura.com.br/course/flutter-web-api)
+- [ ] [Comunicação HTTP: Flutter com web API](https://cursos.alura.com.br/course/flutter-comunicacao-http)
  
 
 

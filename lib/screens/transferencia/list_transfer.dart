@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Transferencias';
 
-class transferList extends StatefulWidget {
-  final List<transfer> _transfers = [];
+class TransferList extends StatefulWidget {
+  final List<Transfer> _transfers = [];
 
   @override
   State<StatefulWidget> createState() {
-    return transferListState();
+    return TransferListState();
   }
 }
 
-class transferListState extends State<transferList> {
+class TransferListState extends State<TransferList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class transferListState extends State<transferList> {
         ));
   }
 
-  void _update(transfer transferReceived) {
+  void _update(Transfer transferReceived) {
     if (transferReceived != null) {
       setState(() {
         widget._transfers.add(transferReceived);
@@ -49,7 +49,7 @@ class transferListState extends State<transferList> {
 }
 
 class TransferItem extends StatelessWidget {
-  final transfer _transfer;
+  final Transfer _transfer;
 
   TransferItem(this._transfer);
 
