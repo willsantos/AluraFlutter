@@ -6,9 +6,8 @@ import '../api.dart';
 
 class TransactionRoutes {
   Future<List<Transaction>> findAll() async {
-    final Response response = await client
-        .get(Uri.https(baseUrl, 'transactions'))
-        .timeout(Duration(seconds: 5));
+    final Response response =
+        await client.get(Uri.https(baseUrl, 'transactions'));
 
     final List<dynamic> decodedJson = jsonDecode(response.body);
 
@@ -19,15 +18,30 @@ class TransactionRoutes {
 
   Future<Transaction> save(Transaction transaction, String password) async {
     final String transactionJson = jsonEncode(transaction.toJson());
-    final Response response = await client
-        .post(Uri.https(baseUrl, 'transactions'),
+    final Response response =
+        await client.post(Uri.https(baseUrl, 'transactions'),
             headers: {
               'Content-type': 'application/json',
               'password': password,
             },
-            body: transactionJson)
-        .timeout(Duration(seconds: 5));
+            body: transactionJson);
 
-    return Transaction.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return Transaction.fromJson(jsonDecode(response.body));
+    }
+
+    throw HttpException(_statusCodeResponses[response.statusCode]);
   }
+
+  static final Map<int, String> _statusCodeResponses = {
+    400: 'There was an error submitting transaction',
+    401: 'Auth Failed',
+    404: 'Server not found',
+  };
+}
+
+class HttpException implements Exception {
+  final String message;
+
+  HttpException(this.message);
 }

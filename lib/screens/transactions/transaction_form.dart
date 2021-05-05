@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
@@ -90,10 +93,27 @@ class _TransactionFormState extends State<TransactionForm> {
     String password,
     BuildContext context,
   ) async {
-    _transactionRoute.save(transactionCreated, password).then((transaction) {
-      if (transaction != null) {
-        Navigator.pop(context);
-      }
-    });
+    final Transaction transaction = await _transactionRoute
+        .save(transactionCreated, password)
+        .catchError((error) {
+      showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return FailureDialog(error.message);
+          });
+    }, test: (error) => error is Exception).catchError((error) {
+      showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return FailureDialog('Timeout');
+          });
+    }, test: (error) => error is TimeoutException);
+    if (transaction != null) {
+      showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return SuccessDialog('Sucessful transaction');
+          }).then((value) => Navigator.pop(context));
+    }
   }
 }
