@@ -28,6 +28,7 @@ dependencies:
   http:
   http_interceptor:
   flutter_dotenv:
+  uuid:
 
 
   # The following adds the Cupertino Icons font to your application.

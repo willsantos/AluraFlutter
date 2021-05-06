@@ -4,12 +4,13 @@ import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/services/routes/transactions_routes.dart';
 import 'package:flutter/material.dart';
 
-class TransactionsList extends StatelessWidget {
 
+class TransactionsList extends StatelessWidget {
   final TransactionRoutes _transactionRoute = TransactionRoutes();
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Transactions'),
