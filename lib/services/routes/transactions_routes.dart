@@ -19,7 +19,7 @@ class TransactionRoutes {
   Future<Transaction> save(Transaction transaction, String password) async {
     final String transactionJson = jsonEncode(transaction.toJson());
 
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 2)); //Fake delay of server
 
     final Response response =
         await client.post(Uri.https(baseUrl, 'transactions'),
