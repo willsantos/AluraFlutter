@@ -101,7 +101,7 @@ class _TransactionFormState extends State<TransactionForm> {
           builder: (contextDialog) {
             return FailureDialog(error.message);
           });
-    }, test: (error) => error is Exception).catchError((error) {
+    }, test: (error) => error is HttpException).catchError((error) {
       showDialog(
           context: context,
           builder: (contextDialog) {
