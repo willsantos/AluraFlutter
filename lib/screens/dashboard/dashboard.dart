@@ -1,5 +1,6 @@
 import 'package:bytebank/screens/contacts/list_contacts.dart';
 import 'package:bytebank/screens/transactions/transactions_list.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Dashboard';
@@ -42,6 +43,9 @@ class Dashboard extends StatelessWidget {
   }
 
   void _showContactsList(BuildContext context) {
+//Firebase forces crash
+    FirebaseCrashlytics.instance.crash();
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ContactsList(),

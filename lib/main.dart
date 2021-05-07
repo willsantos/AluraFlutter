@@ -1,10 +1,16 @@
 import 'package:bytebank/components/transaction_auth_dialog.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // import 'package:sqflite/sqflite.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Firebase.
+  await Firebase.initializeApp();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   await DotEnv.load(fileName: '.env');
   runApp(ByteBank());
 }
