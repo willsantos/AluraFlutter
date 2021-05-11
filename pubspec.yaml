@@ -30,7 +30,7 @@ dependencies:
   flutter_dotenv:
   uuid:
   firebase_core:
-  firebase_crashlytics: 
+  firebase_crashlytics: ^2.0.2
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -10,6 +10,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize Firebase.
   await Firebase.initializeApp();
+  FirebaseCrashlytics.instance.setUserIdentifier('will123');
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   await DotEnv.load(fileName: '.env');
   runApp(ByteBank());
