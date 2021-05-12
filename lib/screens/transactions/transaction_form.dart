@@ -6,6 +6,8 @@ import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/services/routes/transactions_routes.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -23,10 +25,13 @@ class _TransactionFormState extends State<TransactionForm> {
   final TransactionRoutes _transactionRoute = TransactionRoutes();
   final String transactionId = Uuid().v4();
   bool _sending = false;
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, //Idenfifica o Scaffold para ser visivel em toda a app.
       appBar: AppBar(
         title: Text('New transaction'),
       ),
@@ -136,10 +141,37 @@ class _TransactionFormState extends State<TransactionForm> {
     final Transaction transaction = await _transactionRoute
         .save(transactionCreated, password)
         .catchError((error) {
+      if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+        FirebaseCrashlytics.instance
+            .setCustomKey('exception', error.toString());
+        FirebaseCrashlytics.instance.setCustomKey('http_code', error.message);
+        FirebaseCrashlytics.instance
+            .setCustomKey('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance
+            .recordError(errorPropertyTextConfiguration, null);
+      }
+
       _showFailureMessage(context, message: error.message);
     }, test: (error) => error is HttpException).catchError((error) {
+      if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+        FirebaseCrashlytics.instance
+            .setCustomKey('exception', error.toString());
+        FirebaseCrashlytics.instance
+            .setCustomKey('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance
+            .recordError(errorPropertyTextConfiguration, null);
+      }
+
       _showFailureMessage(context, message: 'Timeout');
     }, test: (error) => error is TimeoutException).catchError((error) {
+      if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+        FirebaseCrashlytics.instance
+            .setCustomKey('exception', error.toString());
+        FirebaseCrashlytics.instance
+            .setCustomKey('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance.recordError(error, null);
+      }
+
       _showFailureMessage(context);
     }).whenComplete(() {
       setState(() {
@@ -151,6 +183,12 @@ class _TransactionFormState extends State<TransactionForm> {
 
   void _showFailureMessage(BuildContext context,
       {String message = 'Unknown error'}) {
+    final snackBar = SnackBar(content: Text(message));
+
+    //TODO entender melhor esse deprecated
+
+    //_scaffoldKey.currentState.showSnackBar(snackBar);
+
     showDialog(
         context: context,
         builder: (contextDialog) {
