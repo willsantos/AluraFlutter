@@ -1,6 +1,5 @@
 import 'package:bytebank/screens/contacts/list_contacts.dart';
 import 'package:bytebank/screens/transactions/transactions_list.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 const _titleAppBar = 'Dashboard';
