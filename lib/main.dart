@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/models/balance.dart';
+import 'package:bytebank/models/transfers.dart';
 import 'package:bytebank/screens/dashboard/newDashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
@@ -26,8 +27,13 @@ Future main() async {
   }
 
   runZonedGuarded<Future<void>>(() async {
-    runApp(ChangeNotifierProvider(
-      create: (context) => Balance(0),
+    runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => Balance(0),
+        ),
+        ChangeNotifierProvider(create: (context) => Transfers())
+      ],
       child: ByteBank(),
     ));
   }, FirebaseCrashlytics.instance.recordError);
