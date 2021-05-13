@@ -7,7 +7,8 @@ A new Flutter project developed in Alura's courses:
 - [x] [Flutter com web API](https://cursos.alura.com.br/course/flutter-web-api)
 - [x] [Comunicação HTTP: Flutter com web API](https://cursos.alura.com.br/course/flutter-comunicacao-http)
 - [x] [Flutter: Firebase Crashlytics](https://cursos.alura.com.br/course/flutter-firebase-crashlytics-relatorios-tempo-real)
-- [ ] [Flutter: Gerenciamento de Estados com Provider](https://cursos.alura.com.br/course/flutter-gerenciamento-estados-provider)
+- [x] [Flutter: Gerenciamento de Estados com Provider](https://cursos.alura.com.br/course/flutter-gerenciamento-estados-provider)
+- [ ] [Flutter: Streams de programação reativa com BLoC](https://cursos.alura.com.br/course/flutter-bloc)
  
 
 
