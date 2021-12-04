@@ -27,7 +27,7 @@ dependencies:
   path:
   http:
   http_interceptor:
-  flutter_dotenv:
+  flutter_dotenv: ^3.1.0
   uuid:
   firebase_core:
   firebase_crashlytics: ^2.0.2
