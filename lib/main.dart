@@ -1,7 +1,6 @@
-import 'package:bytebank/components/transaction_auth_dialog.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
-import 'package:bytebank/screens/dashboard/dashboard.dart';
+import 'package:bytebank/screens/counter/counter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 // import 'package:sqflite/sqflite.dart';
 
 Future main() async {
@@ -21,7 +20,7 @@ class ByteBank extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: Dashboard(),
+      home: CounterPage(),
     );
   }
 }
