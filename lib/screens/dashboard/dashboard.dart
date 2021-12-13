@@ -3,6 +3,7 @@ import 'package:bytebank/models/name.dart';
 import 'package:bytebank/screens/contacts/list_contacts.dart';
 import 'package:bytebank/screens/name/name.dart';
 import 'package:bytebank/screens/transactions/transactions_list.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
