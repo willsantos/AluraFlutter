@@ -1,13 +1,14 @@
-import 'package:bytebank/models/transfer.dart';
-import 'package:flutter/material.dart';
+class Transfer {
+  final double value;
+  final int accountNumber;
 
-class Transfers extends ChangeNotifier {
-  final List<Transfer> _transfers = [];
+  Transfer(
+    this.value,
+    this.accountNumber,
+  );
 
-  List<Transfer> get transfers => _transfers;
-
-  add(Transfer newTransfer) {
-    transfers.add(newTransfer);
-    notifyListeners();
+  @override
+  String toString() {
+    return 'Transferencia{valor: $value, numeroConta: $accountNumber}';
   }
 }

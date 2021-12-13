@@ -15,7 +15,6 @@ class LogObserver extends BlocObserver {
     print("${cubit.runtimeType} => $change");
     super.onChange(cubit, change);
   }
-
 }
 
 class ByteBank extends StatelessWidget {
@@ -31,9 +30,7 @@ class ByteBank extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-
       home: DashboardContainer(),
-
     );
   }
 }

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.wilsonsantos.bytebank">
+    package="com.example.bytebank">
    <application
         android:label="bytebank"
         android:icon="@mipmap/ic_launcher">
