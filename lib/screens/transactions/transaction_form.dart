@@ -81,9 +81,9 @@ class TransactionFormContainer extends BlocContainer {
         },
         child: BlocListener<TransactionFormCubit, TransactionFormState>(
             listener: (context, state) {
-              if (state is SentFormState) {
-                Navigator.pop(context);
-              }
+              // if (state is SentFormState) {
+              //   Navigator.pop(context);
+              // }
             },
             child: TransactionForm(_contact)));
   }
@@ -100,8 +100,12 @@ class TransactionForm extends StatelessWidget {
       if (state is ShowFormState) {
         return _BasicForm(_contact);
       }
-      if (state is SendingFormState || state is SentFormState) {
+      if (state is SendingFormState) {
         return ProgressView();
+      }
+
+      if (state is SentFormState) {
+        return SuccessDialog('Successful transaction');
       }
 
       if (state is FatalErrorFormState) {
