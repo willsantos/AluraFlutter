@@ -1,32 +1,144 @@
 import 'dart:async';
 
-import 'package:bytebank/components/progress.dart';
-import 'package:bytebank/components/response_dialog.dart';
-import 'package:bytebank/components/transaction_auth_dialog.dart';
-import 'package:bytebank/models/contact.dart';
-import 'package:bytebank/models/transaction.dart';
-import 'package:bytebank/services/routes/transactions_routes.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+
+import 'package:bytebank/components/container.dart';
+import 'package:bytebank/components/error.dart';
+
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
-class TransactionForm extends StatefulWidget {
-  final Contact contact;
-
-  TransactionForm(this.contact);
-
-  @override
-  _TransactionFormState createState() => _TransactionFormState();
+@immutable
+abstract class TransactionFormState {
+  const TransactionFormState();
 }
 
-class _TransactionFormState extends State<TransactionForm> {
+@immutable
+class ShowFormState extends TransactionFormState {
+  const ShowFormState();
+}
+
+@immutable
+class SendingFormState extends TransactionFormState {
+  const SendingFormState();
+}
+
+@immutable
+class SentFormState extends TransactionFormState {
+  const SentFormState();
+}
+
+@immutable
+class FatalErrorFormState extends TransactionFormState {
+  final String _message;
+
+  const FatalErrorFormState(this._message);
+}
+
+class TransactionFormCubit extends Cubit<TransactionFormState> {
+  TransactionFormCubit() : super(ShowFormState());
+
+  //final TransactionRoutes _transactionRoute = TransactionRoutes();
+
+  void save(Transaction transactionCreated, String password,
+      BuildContext context) async {
+    emit(SendingFormState());
+    await _send(
+      transactionCreated,
+      password,
+      context,
+    );
+  }
+
+
+  _send(Transaction transactionCreated, String password,
+      BuildContext context) async {
+    await TransactionRoutes()
+        .save(transactionCreated, password)
+        .then((transaction) => emit(SentFormState()))
+        .catchError((error) {
+      emit(FatalErrorFormState(error.message));
+    }, test: (error) => error is HttpException).catchError((error) {
+      emit(FatalErrorFormState('Timeout submitting the transaction'));
+    }, test: (error) => error is TimeoutException).catchError((error) {
+      emit(FatalErrorFormState(error.message));
+    });
+  }
+}
+
+class TransactionFormContainer extends BlocContainer {
+  final Contact _contact;
+  TransactionFormContainer(this._contact);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<TransactionFormCubit>(
+        create: (BuildContext context) {
+          return TransactionFormCubit();
+        },
+        child: BlocListener<TransactionFormCubit, TransactionFormState>(
+            listener: (context, state) {
+              // if (state is SentFormState) {
+              //   Navigator.pop(context);
+              // }
+            },
+            child: TransactionForm(_contact)));
+  }
+}
+
+class TransactionForm extends StatelessWidget {
+  final Contact _contact;
+  TransactionForm(this._contact);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TransactionFormCubit, TransactionFormState>(
+        builder: (context, state) {
+      if (state is ShowFormState) {
+        return _BasicForm(_contact);
+      }
+      if (state is SendingFormState) {
+        return ProgressView();
+      }
+
+      if (state is SentFormState) {
+        return SuccessDialog('Successful transaction');
+      }
+
+      if (state is FatalErrorFormState) {
+        return ErrorView(state._message);
+      }
+      return ErrorView("Unknown error!");
+    });
+  }
+
+  void _showSuccessfulMessage(Transaction transaction, BuildContext context) {
+    if (transaction != null) {
+      showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return SuccessDialog('Successful transaction');
+          }).then((value) => Navigator.pop(context));
+    }
+  }
+
+  void _showFailureMessage(BuildContext context,
+      {String message = 'Unknown error'}) {
+    showDialog(
+        context: context,
+        builder: (contextDialog) {
+          return FailureDialog(message);
+        });
+  }
+}
+
+class _BasicForm extends StatelessWidget {
+  final Contact _contact;
   final TextEditingController _valueController = TextEditingController();
-  final TransactionRoutes _transactionRoute = TransactionRoutes();
+
   final String transactionId = Uuid().v4();
-  bool _sending = false;
-  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
-      GlobalKey<ScaffoldMessengerState>();
+
+  _BasicForm(this._contact);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +163,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 visible: _sending,
               ),
               Text(
-                widget.contact.name,
+                _contact.name,
                 style: TextStyle(
                   fontSize: 24.0,
                 ),
@@ -59,7 +171,7 @@ class _TransactionFormState extends State<TransactionForm> {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Text(
-                  widget.contact.account.toString(),
+                  _contact.account.toString(),
                   style: TextStyle(
                     fontSize: 32.0,
                     fontWeight: FontWeight.bold,
@@ -87,14 +199,20 @@ class _TransactionFormState extends State<TransactionForm> {
                       final transactionCreated = Transaction(
                         transactionId,
                         value,
-                        widget.contact,
+
+                        _contact,
+
                       );
                       showDialog(
                           context: context,
                           builder: (contextDialog) {
                             return TransactionAuthDialog(
                               onConfirm: (String password) {
-                                _save(transactionCreated, password, context);
+
+                                BlocProvider.of<TransactionFormCubit>(context)
+                                    .save(
+                                        transactionCreated, password, context);
+
                               },
                             );
                           });
