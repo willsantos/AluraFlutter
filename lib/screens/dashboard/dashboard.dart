@@ -14,15 +14,20 @@ class DashboardContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => NameCubit("Wilson"),
-      child: DashboardView(),
+      child: I18NLoadingContainer(
+        (messages) => DashboardView(DashboardViewLazyI18N(messages)),
+      ),
     );
   }
 }
 
 class DashboardView extends StatelessWidget {
+  final DashboardViewLazyI18N _i18n;
+
+  DashboardView(this._i18n);
+
   @override
   Widget build(BuildContext context) {
-    final i18n = DashboardViewI18N(context);
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<NameCubit, String>(
@@ -42,17 +47,17 @@ class DashboardView extends StatelessWidget {
             child: Row(
               children: [
                 _FeatureItem(
-                  i18n.transfer,
+                  _i18n.transfer,
                   Icons.monetization_on,
                   onClick: () => _showContactsList(context),
                 ),
                 _FeatureItem(
-                  i18n.transaction_feed,
+                  _i18n.transaction_feed,
                   Icons.description,
                   onClick: () => _showTransfersList(context),
                 ),
                 _FeatureItem(
-                  i18n.change_name,
+                  _i18n.change_name,
                   Icons.person_outline,
                   onClick: () => _showChangeName(context),
                 ),
@@ -86,6 +91,16 @@ class DashboardView extends StatelessWidget {
       ),
     );
   }
+}
+
+class DashboardViewLazyI18N {
+  final I18NMessages _messages;
+
+  DashboardViewLazyI18N(this._messages);
+
+  String get transfer => _messages.get("transfer");
+  String get transaction_feed => _messages.get("transaction_feed");
+  String get change_name => _messages.get("change_name");
 }
 
 class DashboardViewI18N extends ViewI18N {
