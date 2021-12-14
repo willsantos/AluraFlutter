@@ -42,17 +42,17 @@ class DashboardView extends StatelessWidget {
             child: Row(
               children: [
                 _FeatureItem(
-                  i18n.transfer(),
+                  i18n.transfer,
                   Icons.monetization_on,
                   onClick: () => _showContactsList(context),
                 ),
                 _FeatureItem(
-                  i18n.transaction_feed(),
+                  i18n.transaction_feed,
                   Icons.description,
                   onClick: () => _showTransfersList(context),
                 ),
                 _FeatureItem(
-                  i18n.change_name(),
+                  i18n.change_name,
                   Icons.person_outline,
                   onClick: () => _showChangeName(context),
                 ),
@@ -91,17 +91,13 @@ class DashboardView extends StatelessWidget {
 class DashboardViewI18N extends ViewI18N {
   DashboardViewI18N(BuildContext context) : super(context);
 
-  String transfer() {
-    return localize({"pt-br": "Transferir", "en": "Transfer"});
-  }
+  String get transfer => localize({"pt-br": "Transferir", "en": "Transfer"});
 
-  String transaction_feed() {
-    return localize({"pt-br": "Transações", "en": "Transaction Feed"});
-  }
+  String get transaction_feed =>
+      localize({"pt-br": "Transações", "en": "Transaction Feed"});
 
-  String change_name() {
-    return localize({"pt-br": "Mudar Nome", "en": "Change Name"});
-  }
+  String get change_name =>
+      localize({"pt-br": "Mudar Nome", "en": "Change Name"});
 }
 
 class _FeatureItem extends StatelessWidget {
