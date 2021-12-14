@@ -65,37 +65,46 @@ class LocalizationContainer extends BlocContainer {
 }
 
 class CurrentLocaleCubit extends Cubit<String> {
-  CurrentLocaleCubit() : super("pt-br");
+  CurrentLocaleCubit() : super("en");
 }
 
 class ViewI18N {
-  String _language;
+  String language;
 
   ViewI18N(BuildContext context) {
-    this._language = BlocProvider.of<CurrentLocaleCubit>(context).state;
+    this.language = BlocProvider.of<CurrentLocaleCubit>(context).state;
   }
 
   String localize(Map<String, String> values) {
     assert(values != null);
-    assert(values.containsKey(_language));
+    assert(values.containsKey(language));
 
-    return values[_language];
+    return values[language];
   }
 }
 
 class I18NLoadingContainer extends BlocContainer {
-  final I18NWidgetCreator _creator;
+  I18NWidgetCreator creator;
+  String translateScreen;
+  String translateLocale;
 
-  I18NLoadingContainer(this._creator);
+  I18NLoadingContainer(
+      {@required String translateScreen,
+      @required String translateLocale,
+      @required I18NWidgetCreator creator}) {
+    this.creator = creator;
+    this.translateScreen = translateScreen;
+    this.translateLocale = translateLocale;
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider<I18NMessagesCubit>(
       create: (BuildContext context) {
         final cubit = I18NMessagesCubit();
-        cubit.reload(I18NWebClient());
+        cubit.reload(I18NWebClient(this.translateScreen, this.translateLocale));
         return cubit;
       },
-      child: I18NLoadingView(this._creator),
+      child: I18NLoadingView(this.creator),
     );
   }
 }

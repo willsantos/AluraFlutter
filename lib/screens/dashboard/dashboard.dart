@@ -15,7 +15,9 @@ class DashboardContainer extends StatelessWidget {
     return BlocProvider(
       create: (_) => NameCubit("Wilson"),
       child: I18NLoadingContainer(
-        (messages) => DashboardView(DashboardViewLazyI18N(messages)),
+        translateScreen: 'Dashboard',
+        translateLocale: ViewI18N(context).language,
+        creator: (messages) => DashboardView(DashboardViewLazyI18N(messages)),
       ),
     );
   }
