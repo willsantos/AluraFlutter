@@ -92,15 +92,15 @@ class DashboardViewI18N extends ViewI18N {
   DashboardViewI18N(BuildContext context) : super(context);
 
   String transfer() {
-    return 'Transfer';
+    return localize({"pt-br": "Transferir", "en": "Transfer"});
   }
 
   String transaction_feed() {
-    return 'Transaction Feed';
+    return localize({"pt-br": "Transações", "en": "Transaction Feed"});
   }
 
   String change_name() {
-    return 'Change Name';
+    return localize({"pt-br": "Mudar Nome", "en": "Change Name"});
   }
 }
 

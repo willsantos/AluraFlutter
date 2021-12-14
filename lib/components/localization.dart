@@ -27,4 +27,8 @@ class ViewI18N {
   ViewI18N(BuildContext context) {
     this._language = BlocProvider.of<CurrentLocaleCubit>(context).state;
   }
+
+  String localize(Map<String, String> values) {
+    return values[_language];
+  }
 }
