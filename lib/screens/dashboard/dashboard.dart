@@ -1,4 +1,5 @@
 import 'package:bytebank/components/container.dart';
+import 'package:bytebank/components/localization.dart';
 import 'package:bytebank/models/name.dart';
 import 'package:bytebank/screens/contacts/list_contacts.dart';
 import 'package:bytebank/screens/name/name.dart';
@@ -21,6 +22,7 @@ class DashboardContainer extends StatelessWidget {
 class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final i18n = DashboardViewI18N(context);
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<NameCubit, String>(
@@ -40,17 +42,17 @@ class DashboardView extends StatelessWidget {
             child: Row(
               children: [
                 _FeatureItem(
-                  'Transfer',
+                  i18n.transfer(),
                   Icons.monetization_on,
                   onClick: () => _showContactsList(context),
                 ),
                 _FeatureItem(
-                  'Transaction Feed',
+                  i18n.transaction_feed(),
                   Icons.description,
                   onClick: () => _showTransfersList(context),
                 ),
                 _FeatureItem(
-                  'Change Name',
+                  i18n.change_name(),
                   Icons.person_outline,
                   onClick: () => _showChangeName(context),
                 ),
@@ -83,6 +85,22 @@ class DashboardView extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class DashboardViewI18N extends ViewI18N {
+  DashboardViewI18N(BuildContext context) : super(context);
+
+  String transfer() {
+    return 'Transfer';
+  }
+
+  String transaction_feed() {
+    return 'Transaction Feed';
+  }
+
+  String change_name() {
+    return 'Change Name';
   }
 }
 
