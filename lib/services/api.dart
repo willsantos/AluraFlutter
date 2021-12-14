@@ -12,3 +12,5 @@ final Client client = InterceptedClient.build(
 //final String baseUrl = 'localhost:8080'; //Nao colocar o prefixo https
 
 final String baseUrl = Config.baseUrl;
+final String messagesBaseUrl = Config.messagesBaseUrl;
+final String messagesUri = Config.messagesUri;
