@@ -1,9 +1,12 @@
 //Localization and Internationalization
+import 'dart:async';
+
 import 'package:bytebank/components/error.dart';
 import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/services/webclient/i18n_webclient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localstorage/localstorage.dart';
 
 import 'container.dart';
 
@@ -96,11 +99,13 @@ class I18NLoadingContainer extends BlocContainer {
     this.translateScreen = translateScreen;
     this.translateLocale = translateLocale;
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<I18NMessagesCubit>(
       create: (BuildContext context) {
-        final cubit = I18NMessagesCubit();
+        final cubit =
+            I18NMessagesCubit(this.translateScreen, this.translateLocale);
         cubit.reload(I18NWebClient(this.translateScreen, this.translateLocale));
         return cubit;
       },
@@ -131,12 +136,34 @@ class I18NLoadingView extends StatelessWidget {
 }
 
 class I18NMessagesCubit extends Cubit<I18NMessagesState> {
-  I18NMessagesCubit() : super(InitI18NMessagesState());
+  final String _translateScreen;
+  final String _translateLocale;
+  LocalStorage _storage;
+  String _translateFile;
 
-  void reload(I18NWebClient client) {
+  I18NMessagesCubit(this._translateScreen, this._translateLocale)
+      : super(InitI18NMessagesState()) {
+    this._storage = new LocalStorage(
+        'local_translates_$_translateLocale-$_translateScreen.json');
+    this._translateFile = "translate_$_translateLocale-$_translateScreen";
+  }
+
+  reload(I18NWebClient client) async {
     emit(LoadingI18NMessagesState());
-    client.findAll().then((messages) => emit(
-          LoadedI18NMessagesState(I18NMessages(messages)),
-        ));
+
+    await _storage.ready;
+    final items = _storage.getItem(_translateFile);
+    if (items != null) {
+      print('Load LocalStorage: ' + _translateFile);
+      emit(LoadedI18NMessagesState(I18NMessages(items)));
+      return;
+    }
+    client.findAll().then(saveAndRefresh);
+  }
+
+  FutureOr saveAndRefresh(Map<String, dynamic> messages) {
+    _storage.setItem(_translateFile, messages);
+    print('Save LocalStorage key: ' + _translateFile);
+    emit(LoadedI18NMessagesState(I18NMessages(messages)));
   }
 }
