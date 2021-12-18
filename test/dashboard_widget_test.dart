@@ -26,6 +26,16 @@ void main() {
         featureItemMatcher(widget, 'Transfer', Icons.monetization_on));
     expect(transferFeatureItem, findsOneWidget);
   });
+
+  testWidgets(
+      'Should display the transaction feed feature item when the Dashboard is open',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(home: Dashboard()));
+
+    final transactionFeedFeatureItem = find.byWidgetPredicate((widget) =>
+        featureItemMatcher(widget, 'Transaction Feed', Icons.description));
+    expect(transactionFeedFeatureItem, findsOneWidget);
+  });
 }
 
 bool featureItemMatcher(Widget widget, String name, IconData icon) {
