@@ -21,11 +21,16 @@ void main() {
       'Should display the transfer feature item when the Dashboard is open',
       (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(home: Dashboard()));
-    final iconTransferFeatureItem =
-        find.widgetWithIcon(FeatureItem, Icons.monetization_on);
-    expect(iconTransferFeatureItem, findsOneWidget);
-    final nameTransferFeatureItem =
-        find.widgetWithText(FeatureItem, 'Transfer');
-    expect(nameTransferFeatureItem, findsOneWidget);
+
+    final transferFeatureItem = find.byWidgetPredicate((widget) =>
+        featureItemMatcher(widget, 'Transfer', Icons.monetization_on));
+    expect(transferFeatureItem, findsOneWidget);
   });
+}
+
+bool featureItemMatcher(Widget widget, String name, IconData icon) {
+  if (widget is FeatureItem) {
+    return widget.name == name && widget.icon == icon;
+  }
+  return false;
 }
