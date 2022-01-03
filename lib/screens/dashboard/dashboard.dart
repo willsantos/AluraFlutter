@@ -1,3 +1,4 @@
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/screens/contacts/list_contacts.dart';
 import 'package:bytebank/screens/transactions/transactions_list.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,9 @@ import 'package:flutter/material.dart';
 const _titleAppBar = 'Dashboard';
 
 class Dashboard extends StatelessWidget {
+  final ContactDao contactDao;
+  Dashboard({@required this.contactDao});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +57,7 @@ class Dashboard extends StatelessWidget {
   void _showContactsList(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ContactsList(),
+        builder: (context) => ContactsList(contactDao: contactDao),
       ),
     );
   }

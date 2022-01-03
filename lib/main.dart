@@ -1,14 +1,21 @@
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'database/dao/contact_dao.dart';
 // import 'package:sqflite/sqflite.dart';
 
 Future main() async {
   await dotenv.load(fileName: '.env');
-  runApp(ByteBank());
+  runApp(ByteBank(
+    contactDao: ContactDao(),
+  ));
 }
 
 class ByteBank extends StatelessWidget {
+  final ContactDao contactDao;
+  ByteBank({@required this.contactDao});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +27,7 @@ class ByteBank extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: Dashboard(),
+      home: Dashboard(contactDao: contactDao),
     );
   }
 }
