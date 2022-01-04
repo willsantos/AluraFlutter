@@ -6,11 +6,16 @@ import 'package:bytebank/screens/transactions/transaction_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ContactsList extends StatelessWidget {
-  final _titleAppbar = 'Transfer';
-
+class ContactsList extends StatefulWidget {
   final ContactDao contactDao;
   ContactsList({@required this.contactDao});
+
+  @override
+  State<ContactsList> createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
+  final _titleAppbar = 'Transfer';
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class ContactsList extends StatelessWidget {
       appBar: AppBar(title: Text(_titleAppbar)),
       body: FutureBuilder<List<Contact>>(
           initialData: [],
-          future: contactDao.findAll(),
+          future: widget.contactDao.findAll(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -49,12 +54,14 @@ class ContactsList extends StatelessWidget {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-                builder: (context) => ContactForm(
-                      contactDao: contactDao,
-                    )),
-          );
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                    builder: (context) => ContactForm(
+                          contactDao: widget.contactDao,
+                        )),
+              )
+              .then((value) => setState(() {}));
         },
         child: Icon(Icons.add),
       ),
