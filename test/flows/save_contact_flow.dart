@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'matchers/matchers.dart';
-import 'mocks/mocks.dart';
+import '../helpers/pumpAndSeatleFix.dart';
+import '../mocks/mocks.dart';
+import 'events/clickEvents.dart';
 
 void main() {
   testWidgets('Should save a contact', (tester) async {
@@ -18,10 +19,7 @@ void main() {
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
 
-    final transferFeatureItem = find.byWidgetPredicate((widget) =>
-        featureItemMatcher(widget, 'Transfer', Icons.monetization_on));
-    expect(transferFeatureItem, findsOneWidget);
-    await tester.tap(transferFeatureItem);
+    await clickOnTheTransferFeatureItem(tester);
     await pumpAndSettleFix(tester);
 
     final contactsList = find.byType(ContactsList);
@@ -66,10 +64,4 @@ bool textFieldMatcher(Widget widget, String labelText) {
     return widget.decoration.labelText == labelText;
   }
   return false;
-}
-
-Future<void> pumpAndSettleFix(WidgetTester tester) async {
-  for (int i = 0; i < 5; i++) {
-    await tester.pump(Duration(seconds: 1));
-  }
 }
