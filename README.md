@@ -16,6 +16,7 @@ my knowledge of GIT.
 - [x] [Flutter: Firebase Crashlytics](https://cursos.alura.com.br/course/flutter-firebase-crashlytics-relatorios-tempo-real) On this Branch: [flutter-firebase-crashlytics](https://github.com/willsantos/AluraFlutter/tree/course/flutter-firebase-crashlytics)
 - [x] [Flutter: Gerenciamento de Estados com Provider](https://cursos.alura.com.br/course/flutter-gerenciamento-estados-provider) On this Branch: [States-provider](https://github.com/willsantos/AluraFlutter/tree/course/states-provider)
 - [x] [Flutter: Streams de programação reativa com BLoC](https://cursos.alura.com.br/course/flutter-bloc) On this Branch: [Bloc_reviewed](https://github.com/willsantos/AluraFlutter/tree/course/Bloc_reviewed)
+- [x] [Testes de unidade e Widget com mocks](https://cursos.alura.com.br/course/testes-widgets-flutter) On this Branch: [tests](https://github.com/willsantos/AluraFlutter/tree/course/tests)
  
 
 
