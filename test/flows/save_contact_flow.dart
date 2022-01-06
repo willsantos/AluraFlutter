@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../helpers/pumpAndSeatleFix.dart';
+import '../matchers/matchers.dart';
 import '../mocks/mocks.dart';
 import 'events/clickEvents.dart';
 
@@ -36,13 +37,13 @@ void main() {
     expect(contactForm, findsOneWidget);
 
     final nameTextField = find.byWidgetPredicate((widget) {
-      return textFieldMatcher(widget, 'Nome Completo');
+      return textFieldByLabelTextMatcher(widget, 'Nome Completo');
     });
     expect(nameTextField, findsOneWidget);
     await tester.enterText(nameTextField, 'Will');
 
     final accountNumberTextField = find.byWidgetPredicate((widget) {
-      return textFieldMatcher(widget, 'Numero da Conta');
+      return textFieldByLabelTextMatcher(widget, 'Numero da Conta');
     });
     expect(accountNumberTextField, findsOneWidget);
     await tester.enterText(accountNumberTextField, '1000');
@@ -57,11 +58,4 @@ void main() {
     expect(contactsListReturned, findsOneWidget);
     verify(mockContactDao.findAll());
   });
-}
-
-bool textFieldMatcher(Widget widget, String labelText) {
-  if (widget is TextField) {
-    return widget.decoration.labelText == labelText;
-  }
-  return false;
 }
