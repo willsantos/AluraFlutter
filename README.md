@@ -6,8 +6,8 @@ A new Flutter project developed in Alura's courses:
 - [x] [Persistência com Flutter](https://cursos.alura.com.br/course/flutter-persistencia-interna)
 - [x] [Flutter com web API](https://cursos.alura.com.br/course/flutter-web-api)
 - [x] [Comunicação HTTP: Flutter com web API](https://cursos.alura.com.br/course/flutter-comunicacao-http)
-- [ ] [Flutter: Firebase Crashlytics](https://cursos.alura.com.br/course/flutter-firebase-crashlytics-relatorios-tempo-real)
- 
+- [x] [Testes de unidade e Widget com mocks](https://cursos.alura.com.br/course/testes-widgets-flutter)
+
 
 
 For help getting started with Flutter, view our
