@@ -6,6 +6,7 @@ import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/services/routes/transactions_routes.dart';
+import 'package:bytebank/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -20,12 +21,13 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
-  final TransactionRoutes _transactionRoute = TransactionRoutes();
+
   final String transactionId = Uuid().v4();
   bool _sending = false;
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('New transaction'),
@@ -89,7 +91,8 @@ class _TransactionFormState extends State<TransactionForm> {
                           builder: (contextDialog) {
                             return TransactionAuthDialog(
                               onConfirm: (String password) {
-                                _save(transactionCreated, password, context);
+                                _save(dependencies.transactionRoute,
+                                    transactionCreated, password, context);
                               },
                             );
                           });
@@ -105,6 +108,7 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   void _save(
+    TransactionRoutes transactionRoute,
     Transaction transactionCreated,
     String password,
     BuildContext context,
@@ -113,6 +117,7 @@ class _TransactionFormState extends State<TransactionForm> {
       _sending = true;
     });
     Transaction transaction = await _send(
+      transactionRoute,
       transactionCreated,
       password,
       context,
@@ -131,9 +136,12 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  Future<Transaction> _send(Transaction transactionCreated, String password,
+  Future<Transaction> _send(
+      TransactionRoutes transactionRoute,
+      Transaction transactionCreated,
+      String password,
       BuildContext context) async {
-    final Transaction transaction = await _transactionRoute
+    final Transaction transaction = await transactionRoute
         .save(transactionCreated, password)
         .catchError((error) {
       _showFailureMessage(context, message: error.message);
